@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Staff Attendance Portal</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background:#f2f2f2;
+            padding:20px;
+        }
+
+        h1{
+            text-align:center;
+            color:blue;
+        }
+
+        .cards{
+            display:flex;
+            gap:20px;
+            justify-content:center;
+            margin-bottom:30px;
+        }
+
+        .card{
+            background:white;
+            padding:20px;
+            width:180px;
+            text-align:center;
+            border-radius:10px;
+            box-shadow:0px 0px 10px gray;
+        }
+
+        form{
+            background:white;
+            width:300px;
+            margin:auto;
+            padding:20px;
+            border-radius:10px;
+        }
+
+        input{
+            width:95%;
+            padding:10px;
+            margin-top:10px;
+        }
+
+        button{
+            width:100%;
+            padding:10px;
+            margin-top:10px;
+            background:blue;
+            color:white;
+            border:none;
+        }
+
+        table{
+            width:80%;
+            margin:auto;
+            margin-top:30px;
+            border-collapse:collapse;
+            background:white;
+        }
+
+        table, th, td{
+            border:1px solid black;
+            padding:10px;
+            text-align:center;
+        }
+
+        th{
+            background:blue;
+            color:white;
+        }
+
+        .export-btn{
+            display:block;
+            width:200px;
+            margin:auto;
+            margin-top:20px;
+            text-align:center;
+            background:green;
+            color:white;
+            padding:10px;
+            text-decoration:none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Attendance Portal</title>
+</head>
+
+<body>
+
+<h1>Staff Attendance Portal</h1>
+
+<!-- DASHBOARD -->
+<h2>Total: <span id="total">23</span></h2>
+<h2>Present: <span id="present">12</span></h2>
+<h2>Absent: <span id="absent">5</span></h2>
+<h2>Leave: <span id="leave">4</span></h2>
+
+<hr>
+
+<!-- TABLE -->
+<h2>Attendance Records</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+
+    <tbody id="tableBody">
+    </tbody>
+</table>
+
+<script>
+
+// DASHBOARD DATA
+fetch("http://127.0.0.1:8000/dashboard")
+.then(res => res.json())
+.then(data => {
+    document.getElementById("total").innerText = data.total_records;
+    document.getElementById("present").innerText = data.present;
+    document.getElementById("absent").innerText = data.absent;
+    document.getElementById("leave").innerText = data.leave;
+});
+
+// TABLE DATA
+fetch("http://127.0.0.1:8000/view")
+.then(res => res.json())
+.then(data => {
+
+    let table = document.getElementById("tableBody");
+
+    data.data.forEach(row => {
+
+        let tr = `<tr>
+            <td>${row[0]}</td>
+            <td>${row[1]}</td>
+            <td>${row[2]}</td>
+            <td>${row[3]}</td>
+        </tr>`;
+
+        table.innerHTML += tr;
+    });
+
+});
+
+</script>
+
+</body>
+</html>
+
